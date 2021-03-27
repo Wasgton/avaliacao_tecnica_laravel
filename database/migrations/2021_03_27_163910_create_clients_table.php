@@ -19,9 +19,9 @@ class CreateClientsTable extends Migration
             $table->string('CPF',11);
             $table->string('RG');
             $table->date('birth_date');
-            $table->unsignedBigInteger('birth_place_id');
-            $table->unsignedBigInteger('deleted_for');
-            $table->unsignedBigInteger('updated_for');
+            $table->unsignedInteger('birth_place_id');
+            $table->unsignedInteger('deleted_for');
+            $table->unsignedInteger('updated_for');
             $table->softDeletes();
             $table->timestamps();
 

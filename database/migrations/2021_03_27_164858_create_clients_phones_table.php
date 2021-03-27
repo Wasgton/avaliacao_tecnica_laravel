@@ -15,7 +15,7 @@ class CreateClientsPhonesTable extends Migration
     {
         Schema::create('clients_phones', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedInteger('client_id');
             $table->string('phone',11);
             $table->softDeletes();
             $table->timestamps();
