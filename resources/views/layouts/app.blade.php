@@ -34,7 +34,20 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li>
+                            <a href="{{route('admin.estados.index')}}">
+                                Estados
+                            </a>
+                        <li>
+                            <a href="{{route('admin.estados.index')}}">
+                                Usuários
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('admin.clientes.index')}}">
+                                Clientes
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

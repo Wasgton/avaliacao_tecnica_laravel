@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +19,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware('auth')->name('admin.')->group(function(){
+
+    Route::resource('clientes','ClientController');
+    Route::resource('estados','BirthPlacesController');
+    Route::resource('usuarios','UserController');
+
+});
