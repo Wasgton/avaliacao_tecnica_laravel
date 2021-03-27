@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\BirthPlaces;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BirthPlacesController extends Controller
 {
@@ -14,7 +15,9 @@ class BirthPlacesController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.birth_places.index',[
+            'birth_places'=>BirthPlaces::paginate(15)
+        ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class BirthPlacesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.birth_places.create');
     }
 
     /**
@@ -35,7 +38,19 @@ class BirthPlacesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request,[
+            'place' => 'Required|string|min:2|max:2'
+        ]);
+
+        $birthPlace = new BirthPlaces();
+
+        $birthPlace->place = $request->place;
+        if(!$birthPlace->save()){
+            return redirect()->back();
+        }
+
+        return redirect()->route('admin.birthPlaces.index');
     }
 
     /**
@@ -57,7 +72,9 @@ class BirthPlacesController extends Controller
      */
     public function edit(BirthPlaces $birthPlaces)
     {
-        //
+        return view('admin.birth_places.edit',[
+            'birthPlace'=>$birthPlaces
+        ]);
     }
 
     /**
@@ -69,7 +86,16 @@ class BirthPlacesController extends Controller
      */
     public function update(Request $request, BirthPlaces $birthPlaces)
     {
-        //
+        $this->validate($request,[
+            'place' => 'Required|string|min:2|max:2'
+        ]);
+
+        $birthPlaces->place = $request->place;
+        if(!$birthPlaces->save()){
+            return redirect()->back();
+        }
+
+        return redirect()->route('admin.birthPlaces.index');
     }
 
     /**
@@ -80,6 +106,10 @@ class BirthPlacesController extends Controller
      */
     public function destroy(BirthPlaces $birthPlaces)
     {
-        //
+       if(!$birthPlaces->delete()){
+           Session::flash('error','Erro ao deletar o estado');
+       }
+
+       return redirect()->back();
     }
 }

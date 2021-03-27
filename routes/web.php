@@ -1,5 +1,6 @@
 <?php
 
+use App\BirthPlaces;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->name('admin.')->group(function(){
 
-    Route::resource('clientes','ClientController');
-    Route::resource('estados','BirthPlacesController');
-    Route::resource('usuarios','UserController');
+    Route::resource('clientes','ClientController')->names('clients')->parameters(['clientes'=>'clients']);
+    Route::resource('estados','BirthPlacesController')->names('birthPlaces')->parameters(['estados'=>'birthPlaces']);
+    Route::resource('usuarios','UserController')->names('users')->parameters(['usuario'=>'user']);
 
 });
