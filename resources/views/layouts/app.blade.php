@@ -47,7 +47,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.clients.index')}}">
+                                <a class="nav-link" href="{{route('admin.client.index')}}">
                                     Clientes
                                 </a>
                             </li>

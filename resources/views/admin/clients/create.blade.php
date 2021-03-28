@@ -44,7 +44,7 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="">Telefone</label>
-                                            <input type="text" name="phone[1]" id="phone[1]" class="form-control">
+                                            <input type="text" name="phone[0]" id="phone[0]" class="form-control">
                                         </div>
                                         <a href="javascript:" class="btn btn-primary" onclick="addPhoneLine(this)">+</a>
                                     </div>

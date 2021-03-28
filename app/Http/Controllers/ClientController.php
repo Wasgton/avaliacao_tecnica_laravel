@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BirthPlaces;
 use App\Client;
 use App\ClientsPhone;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -45,10 +46,12 @@ class ClientController extends Controller
     public function store(Request $request)
     {
 
+        $chars = [',','/','(',')',' ','-','.'];
+
         $this->validate($request,[
             'name'=>'required|string|max:255|',
-            'cpf'=>'required|string|max:11|',
-            'rg'=>'required|string|max:255|',
+            'cpf'=>'required|string|max:14',
+            'rg'=>'required|string',
             'birth_date'=>'required|date',
             'birth_place'=>'required',
         ]);
@@ -59,8 +62,8 @@ class ClientController extends Controller
 
             $client = new Client();
             $client->name = $request->name;
-            $client->rg = $request->rg;
-            $client->cpf = $request->cpf;
+            $client->rg = str_replace($chars,'',$request->rg);
+            $client->cpf = str_replace($chars,'',$request->cpf);
             $client->birth_date = $request->birth_date;
             $client->birth_place_id = $request->birth_place;
             $client->created_for = Auth::user()->id;
@@ -69,7 +72,7 @@ class ClientController extends Controller
                 foreach ($request->phone as $phone){
                     $clientPhone = new ClientsPhone();
                     $clientPhone->client_id = $client->id;
-                    $clientPhone->phone = $phone;
+                    $clientPhone->phone = str_replace($chars,'',$phone);
                     $clientPhone->save();
                 }
             }
@@ -108,8 +111,15 @@ class ClientController extends Controller
     public function edit(Client $client)
     {
 
+        $details['created_for'] = User::find($client->created_for)->select('name')->first();
+        $details['updated_for'] = User::find($client->updated_for)->select('name')->first();
+
+        $details['created_for'] = $details['created_for']->name;
+        $details['updated_for'] = $details['updated_for']->name;
+
         return view('admin.clients.edit',[
             'client'=>$client,
+            'details'=>$details,
             'birthPlaces'=>BirthPlaces::all(),
             'phones'=>ClientsPhone::where('client_id',$client->id)->get()
         ]);
@@ -124,9 +134,11 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
+        $chars = [',','/','(',')',' ','-','.'];
+
         $this->validate($request,[
             'name'=>'required|string|max:255|',
-            'cpf'=>'required|string|max:11|',
+            'cpf'=>'required|string|max:14|',
             'rg'=>'required|string|max:255|',
             'birth_date'=>'required|date',
             'birth_place'=>'required',
@@ -136,26 +148,34 @@ class ClientController extends Controller
 
             DB::beginTransaction();
 
-            $client = new Client();
             $client->name = $request->name;
             $client->rg = $request->rg;
             $client->cpf = $request->cpf;
             $client->birth_date = $request->birth_date;
             $client->birth_place_id = $request->birth_place;
             $client->updated_for = Auth::user()->id;
+            $client->save();
 
-            if($client->save()){
-                foreach ($request->phone as $phone){
-                    $clientPhone = new ClientsPhone();
-                    $clientPhone->client_id = $client->id;
+            foreach ($request->phone as $key => $phone){
+
+                $clientPhone = ClientsPhone::where('client_id',$client->id)->where('id',$key)->get();
+
+                if(count($clientPhone)>0){
+                    $clientPhone = ClientsPhone::find($clientPhone[0]->id);
                     $clientPhone->phone = $phone;
                     $clientPhone->save();
+                }else{
+                    $clientPhone = new ClientsPhone();
+                    $clientPhone->client_id = $client->id;
+                    $clientPhone->phone = str_replace($chars,'',$phone);
+                    $clientPhone->save();
                 }
+
             }
 
             DB::commit();
-            Session::flash('success','Cliente registrado com sucesso');
-            return redirect()->route('admin.clients.index');
+            Session::flash('success','Cliente atualizado com sucesso');
+            return redirect()->route('admin.client.index');
 
         }catch (\Exception $exception){
 
@@ -174,6 +194,10 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        if(!$client->delete()){
+            Session::flash('error','Erro ao deletar o cliente');
+        }
+
+        return redirect()->back();
     }
 }

@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">Cliente</div>
                     <div class="card-body">
-                        <form action="{{route('admin.clients.update',['cliente'=>$client->id])}}" method="post">
+                        <form action="{{route('admin.client.update',['cliente'=>$client->id])}}" method="post">
                             @csrf
                             @method('put')
                             <div class="row">
@@ -18,11 +18,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="cpf">CPF</label>
-                                        <input type="text" name="cpf" id="cpf" class="form-control" value="{{$client->cpf}}">
+                                        <input type="text" name="cpf" id="cpf" class="form-control" value="{{$client->CPF}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="rg">RG</label>
-                                        <input type="text" name="rg" id="rg" class="form-control" value="{{$client->rg}}">
+                                        <input type="text" name="rg" id="rg" class="form-control" value="{{$client->RG}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="birth_date">Data de nascimento</label>
@@ -32,9 +32,14 @@
                                         <label for="">Local de Nascimento</label>
                                         <select name="birth_place" class="form-control">
                                             @foreach($birthPlaces as $birthPlace)
-                                                <option value="{{$birthPlace->id}}">{{$birthPlace->place}}</option>
+                                                <option value="{{$birthPlace->id}}" {{$birthPlace->id==$client->birth_place_id?'selected':''}}>{{$birthPlace->place}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Criado por: <p>{{$details['created_for']}}</p></label><br>
+                                        <label>Atualizado por: <p>{{$details['updated_for']}}</p></label>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -43,6 +48,12 @@
                                             Telefones
                                         </div>
                                         <div class="card-body">
+                                            @if(count($phones)<1)
+                                                <div class="form-group">
+                                                    <label for="">Telefone</label>
+                                                    <input type="text" name="phone[0]" id="phone[0]" class="form-control">
+                                                </div>
+                                            @endif
                                             @foreach($phones as $phone)
                                             <div class="form-group">
                                                 <label for="">Telefone</label>

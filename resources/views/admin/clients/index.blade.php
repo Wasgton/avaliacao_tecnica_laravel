@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <a class="btn btn-primary" href="{{route('admin.clients.create')}}">Novo</a>
+                <a class="btn btn-primary" href="{{route('admin.client.create')}}">Novo</a>
                 <div class="card">
                     <div class="card-header">Clientes</div>
                     <div class="card-body">
@@ -32,8 +32,8 @@
                                         {{$client->name}}
                                     </td>
                                     <td>
-                                        <a href="{{route('admin.clients.edit',['cliente'=>$client->id])}}">Editar</a>
-                                        <form action="{{route('admin.clients.destroy',['cliente'=>$client->id])}}" method="post">
+                                        <a href="{{route('admin.client.edit',['cliente'=>$client->id])}}">Editar</a>
+                                        <form action="{{route('admin.client.destroy',['cliente'=>$client->id])}}" method="post">
                                             @csrf
                                             @method('delete')
                                             <input type='submit' value="X">
