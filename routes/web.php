@@ -23,8 +23,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('auth')->name('admin.')->group(function(){
 
-    Route::resource('clientes','ClientController')->names('clients')->parameters(['clientes'=>'clients']);
-    Route::resource('estados','BirthPlacesController')->names('birthPlaces')->parameters(['estados'=>'birthPlaces']);
-    Route::resource('usuarios','UserController')->names('users')->parameters(['usuario'=>'user']);
+    Route::resource('cliente','ClientController')->names('clients')->parameters(['cliente'=>'clients']);
+    Route::resource('estado','BirthPlacesController')->names('birthPlaces')->parameters(['estado'=>'birthPlaces']);
+    Route::resource('usuario','UserController')->names('users')->parameters(['usuario'=>'user']);
 
 });

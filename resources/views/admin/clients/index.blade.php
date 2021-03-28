@@ -4,9 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <a class="btn btn-primary" href="{{route('admin.birthPlaces.create')}}">Novo</a>
+                <a class="btn btn-primary" href="{{route('admin.clients.create')}}">Novo</a>
                 <div class="card">
-                    <div class="card-header">Estados</div>
+                    <div class="card-header">Clientes</div>
                     <div class="card-body">
                         @if(count($errors)>0)
                                 @foreach($errors->all() as $error)
@@ -18,22 +18,22 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Estado</th>
+                                    <th>Nome</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($birth_places as $birth_place)
+                                @foreach($clients as $client)
                                 <tr>
                                     <td>
-                                        {{$birth_place->id}}
+                                        {{$client->id}}
                                     </td>
                                     <td>
-                                        {{$birth_place->place}}
+                                        {{$client->place}}
                                     </td>
                                     <td>
-                                        <a href="{{route('admin.birthPlaces.edit',['estado'=>$birth_place->id])}}">Editar</a>
-                                        <form action="{{route('admin.birthPlaces.destroy',['estado'=>$birth_place->id])}}" method="post">
+                                        <a href="{{route('admin.clients.edit',['cliente'=>$clients->id])}}">Editar</a>
+                                        <form action="{{route('admin.clients.destroy',['cliente'=>$clients->id])}}" method="post">
                                             @csrf
                                             @method('delete')
                                             <input type='submit' value="X">

@@ -34,20 +34,24 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin.birthPlaces.index')}}">
-                                Estados
-                            </a>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin.users.index')}}">
-                                Usuários
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('admin.clients.index')}}">
-                                Clientes
-                            </a>
-                        </li>
+                        @guest
+
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('admin.birthPlaces.index')}}">
+                                    Estados
+                                </a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('admin.users.index')}}">
+                                    Usuários
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('admin.clients.index')}}">
+                                    Clientes
+                                </a>
+                            </li>
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->

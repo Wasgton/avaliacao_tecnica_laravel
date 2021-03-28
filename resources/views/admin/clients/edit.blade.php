@@ -7,13 +7,14 @@
                 <div class="card">
                     <div class="card-header">Estados</div>
                     <div class="card-body">
-                        <form action="{{route('admin.birthPlaces.store')}}" method="post">
+                        <form action="{{route('admin.birthPlaces.update',['birthPlace'=>$birthPlace->id])}}" method="post">
                             @csrf
+                            @method('PUT')
                             <div class="form-group col-md-4">
                                 <label for="">Estado</label>
-                                <input type="text" name="place" class="form-control" value="{{old('place')}}">
+                                <input type="text" name="place" class="form-control" value="{{$birthPlace->place}}">
                             </div>
-                            <button class="btn btn-primary" >Salvar</button>
+                            <button class="btn btn-primary">Salvar</button>
                         </form>
                     </div>
                     @if(count($errors)>0)

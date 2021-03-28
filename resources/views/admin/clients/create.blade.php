@@ -13,7 +13,7 @@
                                 <label for="">Estado</label>
                                 <input type="text" name="place" class="form-control" value="{{old('place')}}">
                             </div>
-                            <button class="btn btn-primary" >Salvar</button>
+                            <button class="btn btn-primary" href="{{route('admin.birthPlaces.create')}}">Salvar</button>
                         </form>
                     </div>
                     @if(count($errors)>0)
