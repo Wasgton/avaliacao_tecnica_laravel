@@ -29,11 +29,11 @@
                                         {{$client->id}}
                                     </td>
                                     <td>
-                                        {{$client->place}}
+                                        {{$client->name}}
                                     </td>
                                     <td>
-                                        <a href="{{route('admin.clients.edit',['cliente'=>$clients->id])}}">Editar</a>
-                                        <form action="{{route('admin.clients.destroy',['cliente'=>$clients->id])}}" method="post">
+                                        <a href="{{route('admin.clients.edit',['cliente'=>$client->id])}}">Editar</a>
+                                        <form action="{{route('admin.clients.destroy',['cliente'=>$client->id])}}" method="post">
                                             @csrf
                                             @method('delete')
                                             <input type='submit' value="X">
@@ -43,6 +43,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{$clients->links()}}
                     </div>
 
                 </div>

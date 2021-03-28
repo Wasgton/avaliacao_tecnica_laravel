@@ -20,12 +20,12 @@ class CreateClientsTable extends Migration
             $table->string('RG');
             $table->date('birth_date');
             $table->unsignedInteger('birth_place_id');
-            $table->unsignedInteger('deleted_for');
-            $table->unsignedInteger('updated_for');
+            $table->unsignedInteger('created_for')->nullable();
+            $table->unsignedInteger('updated_for')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('deleted_for')->references('id')->on('users');
+            $table->foreign('created_for')->references('id')->on('users');
             $table->foreign('updated_for')->references('id')->on('users');
             $table->foreign('birth_place_id')->references('id')->on('birth_places');
 
