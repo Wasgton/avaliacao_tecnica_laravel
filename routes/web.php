@@ -1,7 +1,9 @@
 <?php
 
 use App\BirthPlaces;
+use \App\Client;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

@@ -111,8 +111,8 @@ class ClientController extends Controller
     public function edit(Client $client)
     {
 
-        $details['created_for'] = User::find($client->created_for)->select('name')->first();
-        $details['updated_for'] = User::find($client->updated_for)->select('name')->first();
+        $details['updated_for'] = $client->updatedFor();
+        $details['created_for'] = $client->createFor();
 
         $details['created_for'] = $details['created_for']->name;
         $details['updated_for'] = $details['updated_for']->name;
@@ -121,7 +121,7 @@ class ClientController extends Controller
             'client'=>$client,
             'details'=>$details,
             'birthPlaces'=>BirthPlaces::all(),
-            'phones'=>ClientsPhone::where('client_id',$client->id)->get()
+            'phones'=> $client->phonesByClient()
         ]);
     }
 
@@ -158,10 +158,9 @@ class ClientController extends Controller
 
             foreach ($request->phone as $key => $phone){
 
-                $clientPhone = ClientsPhone::where('client_id',$client->id)->where('id',$key)->get();
+                $clientPhone = ClientsPhone::find($key);
 
-                if(count($clientPhone)>0){
-                    $clientPhone = ClientsPhone::find($clientPhone[0]->id);
+                if($clientPhone){
                     $clientPhone->phone = $phone;
                     $clientPhone->save();
                 }else{
